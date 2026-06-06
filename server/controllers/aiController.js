@@ -33,7 +33,7 @@ export const generateArticle = async (req, res) => {
         },
     ],
     temperature:0.7,
-    max_tokens: length,
+    max_tokens:4000,  //length
 });
 
 const content= response.choices[0].message.content
@@ -76,7 +76,7 @@ export const generateBlogTitle = async (req, res) => {
         },
     ],
     temperature:0.7,
-    max_tokens: 100,
+    max_tokens: 4000,
 });
 
 const content= response.choices[0].message.content
@@ -110,7 +110,7 @@ console.log("User:", userId);
         
 
         if (plan !== 'premium') {
-            return res.json({ success: false, message: "Feature not available" })
+            return res.json({ success: false, message: "This Feature only available for Premium subcribers" })
         }
 
 const formData = new FormData();
@@ -180,7 +180,7 @@ res.json({success:true, content:secure_url})
 export const removeImageBackground = async (req, res) => {
     try {
         const { userId } = req.auth();
-        const { image } = req.file;
+        const  image = req.file;
         const plan = req.plan;
 
         console.log("Plan:", plan);
@@ -223,7 +223,7 @@ export const removeImageObject = async (req, res) => {
     try {
         const { userId } = req.auth();
          const { object } = req.body;
-        const { image } = req.file;
+        const  image  = req.file;
         const plan = req.plan;
 
         
@@ -287,7 +287,7 @@ const prompt = `Review the following resume and provide constructive feedback on
         },
     ],
     temperature:0.7,
-    max_tokens: 1000,
+    max_tokens: 5000,
 });
 
 const content= response.choices[0].message.content
