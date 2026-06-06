@@ -1,9 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
+import toast from "react-hot-toast";
 
 const Hero = () => {
     const navigate = useNavigate()
+    const handleDemo = () => {
+  toast.success("Demo video coming soon! Please login and start using AI tools ");
+};
+ 
   return (
     <div className='px-4 sm:px-20 xl:px-32 relative inline-flex flex-col w-full justify-center bg-[url(/gradientBackground.png)] bg-cover bg-no-repeat min-h-screen'>
        <div className='text-center mb-6'>
@@ -21,7 +26,7 @@ const Hero = () => {
     Start creating now
   </button>
 
-  <button
+  <button  onClick={handleDemo}
     className='bg-white px-10 py-3 rounded-lg border border-gray-300 hover:scale-102 active:scale-95 transition cursor-pointer'
   >
     Watch demo
