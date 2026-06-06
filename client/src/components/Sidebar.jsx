@@ -61,11 +61,14 @@ const Sidebar = ({sidebar,setSidebar}) => {
            <img src={user.imageUrl} className='w-8 rounded-full ' />
            <div>
             <h1 className='text-sm font-medium'>{user.fullName}</h1>
-<p className='text-xs text-gray-500'>
+            {/* <p className='text-xs text-gray-500'>
+              <Protect plan='premium' fallback="Free">Premium</Protect>Plan
+            </p> */}
+ <p className='text-xs text-gray-500'>
   {user?.publicMetadata?.plan === 'premium'
     ? 'Premium Plan'
     : 'Free Plan'}
-</p>
+</p> 
       </div>
         </div>
         <LogOut onClick={signOut} className='w-4.5 text-gray-400 hover:text-gray-700 transition cursor-pointer' />
