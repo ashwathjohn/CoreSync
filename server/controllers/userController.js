@@ -63,3 +63,19 @@ const formattedArray = `{${updatedLikes.join(',')}}`;
     res.json({ success: false, message: error.message });
   }
 };
+
+
+export const getUserPlan = async (req, res) => {
+  console.log(req.plan);
+  try {
+    res.json({
+      success: true,
+      plan: req.plan,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

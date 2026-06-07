@@ -1,7 +1,10 @@
-import { useClerk, useUser } from '@clerk/react'
+import { useAuth, useClerk, useUser } from '@clerk/react'
+import axios from 'axios';
 import { Eraser, FileText, Hash, House, Image, LogOut, Scissors, SquarePen, Users } from 'lucide-react';
+import { useState } from 'react';
 import  { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
+
 
 
 
@@ -20,10 +23,32 @@ const Sidebar = ({sidebar,setSidebar}) => {
 
     const {user} =useUser();
     const {signOut, openUserProfile} = useClerk()
+const [plan, setPlan] = useState('free');
+const { getToken } = useAuth();
 
-    useEffect(() => {
-  user?.reload();
-}, [user]);
+const fetchPlan = async () => {
+  try {
+    const { data } = await axios.get(
+      '/api/user/get-user-plan',
+      {
+        headers: {
+          Authorization: `Bearer ${await getToken()}`
+        }
+      }
+    );
+
+    if (data.success) {
+      setPlan(data.plan);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+useEffect(() => {
+  fetchPlan();
+}, []);
+
    
   return (
     <div
@@ -65,14 +90,13 @@ const Sidebar = ({sidebar,setSidebar}) => {
            <img src={user.imageUrl} className='w-8 rounded-full ' />
            <div>
             <h1 className='text-sm font-medium'>{user.fullName}</h1>
-            {/* <p className='text-xs text-gray-500'>
-              <Protect plan='premium' fallback="Free">Premium</Protect>Plan
-            </p> */}
+             
  <p className='text-xs text-gray-500'>
-  {user?.publicMetadata?.plan === 'premium'
-    ? 'Premium Plan'
-    : 'Free Plan'}
-</p> 
+
+    {plan === 'premieum'
+  ? 'Premium Plan'
+  : 'Free Plan'}
+</p>  
       </div>
         </div>
         <LogOut onClick={signOut} className='w-4.5 text-gray-400 hover:text-gray-700 transition cursor-pointer' />

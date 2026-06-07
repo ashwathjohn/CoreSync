@@ -6,6 +6,7 @@ import CreationItem from '../components/CreationItem';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 
 const Dashboard = () => {
@@ -14,16 +15,30 @@ const Dashboard = () => {
   const [creations, setCreations] = useState([])
     const [loading,setLoading] =useState(true)
     const {getToken} = useAuth()
+    const [plan, setPlan] = useState('free');
   const getDashboardData = async ()=>{
     try {
+       const token = await getToken();
       const { data } = await axios.get('/api/user/get-user-creations', {
-    headers: { Authorization: `Bearer ${await getToken()}` }
+    headers: { Authorization: `Bearer ${token}` }
   });
   if(data.success){
     setCreations(data.creations)
   }else{
     toast.error(data.message)
   }
+    const { data: planData } = await axios.get(
+      '/api/user/get-user-plan',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (planData.success) {
+      setPlan(planData.plan);
+    }
     } catch (error) {
       toast.error(error.message)
     }
@@ -34,9 +49,7 @@ const Dashboard = () => {
     getDashboardData()
   },[])
 
-  useEffect(() => {
-  user?.reload();
-}, [user]);
+
   return (
     <div className=' h-full overflow-y-scroll p-6'>
      <div className='flex justify-start gap-4 flex-wrap'>
@@ -54,12 +67,13 @@ const Dashboard = () => {
               <div className='flex justify-between items-center w-72 p-4 px-6 bg-white rounded-xl border border-gray-200'>
              <div className='text-slate-600'>
               <p className='text-sm'>Active Plan</p>
-                <h2 className='text-xl font-semibold'>
-    {user?.publicMetadata?.plan === 'premium'
-      ? 'Premium'
-      : 'Free'}
-  </h2>
-  
+                
+         
+ <h2 className='text-xl font-semibold'>
+  {plan === 'premieum' ? 'Premium' : 'Free'}
+</h2>
+      
+    
              </div>
              <div className='w-10 h-10 rounded-lg bg-linear-to-br from-[#FF61C5] to-[#9E53EE] text-white flex justify-center items-center'>
               <Gem className='w-5 text-white' />

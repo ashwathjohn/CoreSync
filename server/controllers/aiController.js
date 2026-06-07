@@ -20,7 +20,7 @@ export const generateArticle = async (req, res) => {
         const plan = req.plan;
         const free_usage = req.free_usage;
 
-        if (plan !== 'premium' && free_usage >= 10) {
+        if (plan !== 'premieum' && free_usage >= 10) {
             return res.json({ success: false, message: "Limit reached. Upgrade to continue." })
         }
 
@@ -40,7 +40,7 @@ const content= response.choices[0].message.content
 
 await sql `INSERT INTO creations (user_id, prompt, content, type) VALUES(${userId}, ${prompt}, ${content}, 'article')`;
 
-if(plan !== 'premium'){
+if(plan !== 'premieum'){
     await clerkClient.users.updateUserMetadata(userId,{
         privateMetadata:{
             free_usage:free_usage +1 
@@ -63,7 +63,7 @@ export const generateBlogTitle = async (req, res) => {
         const plan = req.plan;
         const free_usage = req.free_usage;
 
-        if (plan !== 'premium' && free_usage >= 10) {
+        if (plan !== 'premieum' && free_usage >= 10) {
             return res.json({ success: false, message: "Limit reached. Upgrade to continue." })
         }
 
@@ -83,7 +83,7 @@ const content= response.choices[0].message.content
 
 await sql `INSERT INTO creations (user_id, prompt, content, type) VALUES(${userId}, ${prompt}, ${content}, 'article')`;
 
-if(plan !== 'premium'){
+if(plan !== 'premieum'){
     await clerkClient.users.updateUserMetadata(userId,{
         privateMetadata:{
             free_usage:free_usage +1 
@@ -109,7 +109,7 @@ export const generateImage = async (req, res) => {
 console.log("User:", userId);
         
 
-        if (plan !== 'premium') {
+        if (plan !== 'premieum') {
             return res.json({ success: false, message: "This Feature only available for Premium subcribers" })
         }
 
@@ -187,7 +187,7 @@ export const removeImageBackground = async (req, res) => {
         console.log("User:", userId);
         
 
-        if (plan !== 'premium') {
+        if (plan !== 'premieum') {
             return res.json({ success: false, message: "Feature not available" })
         }
 
@@ -228,7 +228,7 @@ export const removeImageObject = async (req, res) => {
 
         
 
-        if (plan !== 'premium') {
+        if (plan !== 'premieum') {
             return res.json({ success: false, message: "Feature not available" })
         }
 
@@ -265,7 +265,7 @@ export const resumeReview = async (req, res) => {
 
         
 
-        if (plan !== 'premium') {
+        if (plan !== 'premieum') {
             return res.json({ success: false, message: "Feature not available" })
         }
 
